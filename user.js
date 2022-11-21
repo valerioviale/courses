@@ -13,30 +13,30 @@ const UserSchema = new mongoose.Schema({
 
 // we could execute the function before data ara saved
 UserSchema.pre('save', function (next) {
-    if ( this.isNew || this.isModified('password')){
-    const document = this;
+    if (this.isNew || this.isModified('password')) {
+        const document = this;
 
-    bcrypt.hash(document.password, saltRounds, (err, hashedPassword) => {
-        if (err) {
-            next(err);
-        } else {
-            document.password = hashedPassword;
-            next();
-        }
-    });
-} else {
-    next();
-}
-});
-
-UserSchema.methods.isCorrectPassword = function(candidatepassword, callback) {
-    bcrypt.compare(candidatepassword, this.password, function (err, same) {
+        bcrypt.hash(document.password, saltRounds, function (err, hashedPassword) {
             if (err) {
-                callback(err);
+                next(err);
             } else {
-                callback(err, same);
+                document.password = hashedPassword;
+                next();
             }
         });
+    } else {
+        next();
+    }
+});
+
+UserSchema.methods.isCorrectPassword = function (candidatePassword, callback) {
+    bcrypt.compare(candidatePassword, this.password, function (err, same) {
+        if (err) {
+            callback(err);
+        } else {
+            callback(err, same);
+        }
+    });
 }
 
 module.exports = mongoose.model('User', UserSchema);
