@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-const mongo_uri = 'mongodb+srv://mongo:carnival@cluster0.2kd43gq.mongodb.net/test?retryWrites=true&w=majority';
+const mongo_uri = 'mongodb+srv://mongo:password@cluster0.2kd43gq.mongodb.net/test?retryWrites=true&w=majority';
 
 mongoose.connect(mongo_uri, function (err) {
     if (err) {
