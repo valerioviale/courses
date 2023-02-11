@@ -39,7 +39,7 @@ app.post('/register', function (req, res) {
     });
 });
 
-app.post('/autenticate', function (req, res) {
+app.post('/authenticate', function (req, res) {
     const { username, password } = req.body;
 
     User.findOne({ username }).then(
@@ -51,7 +51,7 @@ app.post('/autenticate', function (req, res) {
             } else {
                 if (!bcrypt.compareSync(password, user.password))
                     return res.status(401).send("wrong password");
-                return res.status(200).send('autenticated successfully');
+                return res.status(200).send('authenticated successfully');
             }
         }
     )
